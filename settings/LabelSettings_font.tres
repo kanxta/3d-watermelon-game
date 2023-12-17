@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dft8s4sxhxrsh"]
+
+[ext_resource type="FontFile" uid="uid://ykmm7tsbi2wd" path="res://fonts/07にくまるフォント.otf" id="1_7004w"]
+
+[resource]
+font = ExtResource("1_7004w")
+font_size = 101

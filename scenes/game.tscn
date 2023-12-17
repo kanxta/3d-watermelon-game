@@ -1,0 +1,144 @@
+[gd_scene load_steps=10 format=3 uid="uid://dk4stpkprllio"]
+
+[ext_resource type="FontFile" uid="uid://ykmm7tsbi2wd" path="res://fonts/07にくまるフォント.otf" id="1_2k20d"]
+[ext_resource type="Shape3D" uid="uid://b2xqns1npvvj" path="res://scenes/meshtemplates/floor.tres" id="1_yi2kv"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g671a"]
+
+[sub_resource type="Sky" id="Sky_c4ixk"]
+sky_material = SubResource("ProceduralSkyMaterial_g671a")
+process_mode = 1
+
+[sub_resource type="Environment" id="Environment_4kvv3"]
+background_mode = 2
+sky = SubResource("Sky_c4ixk")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_278pw"]
+size = Vector3(21, 30, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3cmfj"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gccy3"]
+font = ExtResource("1_2k20d")
+font_size = 26
+
+[sub_resource type="LabelSettings" id="LabelSettings_23qpn"]
+font = ExtResource("1_2k20d")
+font_size = 46
+
+[node name="Game" type="CanvasLayer"]
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Node3D"]
+environment = SubResource("Environment_4kvv3")
+
+[node name="bin" type="StaticBody3D" parent="Node3D"]
+
+[node name="floor" type="CollisionShape3D" parent="Node3D/bin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.72594, 0)
+shape = ExtResource("1_yi2kv")
+
+[node name="wall1" type="CollisionShape3D" parent="Node3D/bin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.75, 10)
+shape = SubResource("BoxShape3D_278pw")
+
+[node name="wall2" type="CollisionShape3D" parent="Node3D/bin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.75, -10)
+shape = SubResource("BoxShape3D_278pw")
+
+[node name="wall3" type="CollisionShape3D" parent="Node3D/bin"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 10.75, 0)
+shape = SubResource("BoxShape3D_278pw")
+
+[node name="wall4" type="CollisionShape3D" parent="Node3D/bin"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 10.75, 0)
+shape = SubResource("BoxShape3D_278pw")
+
+[node name="meshes" type="Node3D" parent="Node3D/bin"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/bin/meshes"]
+transform = Transform3D(1.05, 0, 0, 0, 1, 0, 0, 0, 1.05, 0, -3.72378, 0)
+mesh = SubResource("BoxMesh_3cmfj")
+
+[node name="viewport" type="Node2D" parent="."]
+
+[node name="FreeView" type="SubViewportContainer" parent="viewport"]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="FreeViewport" type="SubViewport" parent="viewport/FreeView"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="FreeCamera" type="Camera3D" parent="viewport/FreeView/FreeViewport"]
+transform = Transform3D(0.707107, 0.548015, -0.446855, 0, 0.631948, 0.775011, 0.707107, -0.548015, 0.446855, -11.7516, 25.3452, 11.4668)
+
+[node name="DiagonalView" type="SubViewportContainer" parent="viewport"]
+offset_top = 264.0
+offset_right = 1152.0
+offset_bottom = 912.0
+scale = Vector2(0.29, 0.29)
+
+[node name="DiagonalViewport" type="SubViewport" parent="viewport/DiagonalView"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="DiagonalCamera" type="Camera3D" parent="viewport/DiagonalView/DiagonalViewport"]
+transform = Transform3D(0.707107, 0.548015, -0.446855, 0, 0.631948, 0.775011, 0.707107, -0.548015, 0.446855, -11.7516, 25.3452, 11.4668)
+
+[node name="TopView" type="SubViewportContainer" parent="viewport"]
+offset_left = -16.0
+offset_top = 456.0
+offset_right = 1136.0
+offset_bottom = 1104.0
+scale = Vector2(0.3, 0.3)
+
+[node name="TopViewport" type="SubViewport" parent="viewport/TopView"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="TopCamera" type="Camera3D" parent="viewport/TopView/TopViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.14576, 32.1016, 0)
+
+[node name="UI" type="Control" parent="viewport"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TopViewLabel" type="Label" parent="viewport/UI"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 472.0
+offset_right = 135.0
+offset_bottom = 499.0
+text = "Top view"
+label_settings = SubResource("LabelSettings_gccy3")
+
+[node name="DiagonalViewLabel2" type="Label" parent="viewport/UI"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 264.0
+offset_right = 135.0
+offset_bottom = 291.0
+text = "Diagonal view"
+label_settings = SubResource("LabelSettings_gccy3")
+
+[node name="FreeLavel" type="Label" parent="viewport/UI"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 309.0
+offset_bottom = 55.0
+text = "Free camela"
+label_settings = SubResource("LabelSettings_23qpn")
+
+[node name="Frame" type="Polygon2D" parent="viewport/UI"]
+position = Vector2(0, 456)
+scale = Vector2(0.3, 0.3)
+polygon = PackedVector2Array(0, -26.6667, 0, 640, 1120, 640, 1120, -666.667, 1093.33, -666.667, 0, -666.667, 0, -640, 0, -26.6667, 26.6667, -26.6667, 26.6667, -640, 1093.33, -640.139, 1093.33, 613.333, 26.6667, 613.333, 26.6667, 53.3333, 1093.33, 53.3333, 1093.33, -26.6667)
