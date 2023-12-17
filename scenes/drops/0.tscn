@@ -1,12 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgvk37w34ruhl"]
+[gd_scene load_steps=7 format=3 uid="uid://cgvk37w34ruhl"]
+
+[ext_resource type="Script" path="res://scripts/other/drops.gd" id="1_8dtuv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_62axn"]
+bounce = 0.3
 
 [sub_resource type="SphereMesh" id="SphereMesh_0tkip"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jphf"]
 albedo_color = Color(0.764706, 0.45098, 0.556863, 1)
 
-[node name="0" type="Node3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_rgvw3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_84g0i"]
+radius = 0.520409
+
+[node name="0" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_62axn")
+script = ExtResource("1_8dtuv")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
 mesh = SubResource("SphereMesh_0tkip")
 material = SubResource("StandardMaterial3D_1jphf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_rgvw3")
+
+[node name="Area3D" type="Area3D" parent="." groups=["0"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_84g0i")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
