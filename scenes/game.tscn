@@ -1,23 +1,106 @@
-[gd_scene load_steps=10 format=3 uid="uid://dk4stpkprllio"]
+[gd_scene load_steps=27 format=3 uid="uid://dk4stpkprllio"]
 
 [ext_resource type="FontFile" uid="uid://ykmm7tsbi2wd" path="res://fonts/07にくまるフォント.otf" id="1_2k20d"]
-[ext_resource type="Shape3D" uid="uid://b2xqns1npvvj" path="res://scenes/meshtemplates/floor.tres" id="1_yi2kv"]
+[ext_resource type="Script" path="res://scripts/other/pointer.gd" id="1_au4x0"]
+[ext_resource type="Script" path="res://scripts/camera/FreeCamera.gd" id="1_cv048"]
+[ext_resource type="PackedScene" uid="uid://dsjia688iyou6" path="res://models/clowd.glb" id="1_ncgb5"]
+[ext_resource type="Script" path="res://scripts/UI/GameUI.gd" id="2_h7or4"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g671a"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nci6a"]
 
-[sub_resource type="Sky" id="Sky_c4ixk"]
-sky_material = SubResource("ProceduralSkyMaterial_g671a")
-process_mode = 1
+[sub_resource type="Sky" id="Sky_a5yod"]
+sky_material = SubResource("ProceduralSkyMaterial_nci6a")
 
 [sub_resource type="Environment" id="Environment_4kvv3"]
 background_mode = 2
-sky = SubResource("Sky_c4ixk")
+background_color = Color(0.709804, 0.709804, 0.709804, 1)
+sky = SubResource("Sky_a5yod")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_srbx5"]
+size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_278pw"]
 size = Vector3(21, 30, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3cmfj"]
 size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5ykaw"]
+size = Vector3(0.3, 28, 0.3)
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_k7lfj"]
+albedo_color = Color(0.870588, 0.662745, 0.454902, 1)
+
+[sub_resource type="Animation" id="Animation_ih2mt"]
+resource_name = "Howtomove_apeer"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Howtomove:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.1, 1),
+"update": 0,
+"values": [Vector2(1168, 80), Vector2(760, 80)]
+}
+
+[sub_resource type="Animation" id="Animation_n0c8b"]
+resource_name = "Howtomove_default"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Howtomove:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1168, 80)]
+}
+
+[sub_resource type="Animation" id="Animation_4gefm"]
+resource_name = "Howtomove_disapeer"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Howtomove:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.1, 1),
+"update": 0,
+"values": [Vector2(760, 80), Vector2(1168, 80)]
+}
+
+[sub_resource type="Animation" id="Animation_xqhxk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Howtomove:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1168, 80)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hucds"]
+_data = {
+"Howtomove_apeer": SubResource("Animation_ih2mt"),
+"Howtomove_default": SubResource("Animation_n0c8b"),
+"Howtomove_disapeer": SubResource("Animation_4gefm"),
+"RESET": SubResource("Animation_xqhxk")
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_gccy3"]
 font = ExtResource("1_2k20d")
@@ -27,40 +110,74 @@ font_size = 26
 font = ExtResource("1_2k20d")
 font_size = 46
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqlwr"]
+bg_color = Color(0.372549, 0.298039, 0.0823529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8k1o5"]
+bg_color = Color(0.607843, 0.556863, 0.509804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bcnoo"]
+bg_color = Color(0.427451, 0.384314, 0.345098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkur6"]
+bg_color = Color(0.427451, 0.384314, 0.345098, 1)
+
+[sub_resource type="Theme" id="Theme_gul52"]
+Button/styles/disabled = SubResource("StyleBoxFlat_xqlwr")
+Button/styles/hover = SubResource("StyleBoxFlat_8k1o5")
+Button/styles/normal = SubResource("StyleBoxFlat_bcnoo")
+Button/styles/pressed = SubResource("StyleBoxFlat_nkur6")
+
+[sub_resource type="LabelSettings" id="LabelSettings_oreox"]
+font = ExtResource("1_2k20d")
+font_size = 15
+
 [node name="Game" type="CanvasLayer"]
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="main" type="Node3D" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Node3D"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="main"]
 environment = SubResource("Environment_4kvv3")
 
-[node name="bin" type="StaticBody3D" parent="Node3D"]
+[node name="bin" type="StaticBody3D" parent="main"]
 
-[node name="floor" type="CollisionShape3D" parent="Node3D/bin"]
+[node name="floor" type="CollisionShape3D" parent="main/bin"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.72594, 0)
-shape = ExtResource("1_yi2kv")
+shape = SubResource("BoxShape3D_srbx5")
 
-[node name="wall1" type="CollisionShape3D" parent="Node3D/bin"]
+[node name="wall1" type="CollisionShape3D" parent="main/bin"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.75, 10)
 shape = SubResource("BoxShape3D_278pw")
 
-[node name="wall2" type="CollisionShape3D" parent="Node3D/bin"]
+[node name="wall2" type="CollisionShape3D" parent="main/bin"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.75, -10)
 shape = SubResource("BoxShape3D_278pw")
 
-[node name="wall3" type="CollisionShape3D" parent="Node3D/bin"]
+[node name="wall3" type="CollisionShape3D" parent="main/bin"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 10.75, 0)
 shape = SubResource("BoxShape3D_278pw")
 
-[node name="wall4" type="CollisionShape3D" parent="Node3D/bin"]
+[node name="wall4" type="CollisionShape3D" parent="main/bin"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 10.75, 0)
 shape = SubResource("BoxShape3D_278pw")
 
-[node name="meshes" type="Node3D" parent="Node3D/bin"]
+[node name="meshes" type="Node3D" parent="main/bin"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/bin/meshes"]
+[node name="floor" type="MeshInstance3D" parent="main/bin/meshes"]
 transform = Transform3D(1.05, 0, 0, 0, 1, 0, 0, 0, 1.05, 0, -3.72378, 0)
 mesh = SubResource("BoxMesh_3cmfj")
+
+[node name="dropcursor" type="MeshInstance3D" parent="main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.20214, 10, -4.79126)
+mesh = SubResource("BoxMesh_5ykaw")
+surface_material_override/0 = SubResource("ORMMaterial3D_k7lfj")
+script = ExtResource("1_au4x0")
+
+[node name="clowd" parent="main/dropcursor" instance=ExtResource("1_ncgb5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.184927, 13.5638, 0.5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 6, 0)
 
 [node name="viewport" type="Node2D" parent="."]
 
@@ -74,7 +191,8 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="FreeCamera" type="Camera3D" parent="viewport/FreeView/FreeViewport"]
-transform = Transform3D(0.707107, 0.548015, -0.446855, 0, 0.631948, 0.775011, 0.707107, -0.548015, 0.446855, -11.7516, 25.3452, 11.4668)
+transform = Transform3D(0.707107, 0.548015, -0.446855, 0, 0.631948, 0.775011, 0.707107, -0.548015, 0.446855, -11.7516, 32.3465, 11.4668)
+script = ExtResource("1_cv048")
 
 [node name="DiagonalView" type="SubViewportContainer" parent="viewport"]
 offset_top = 264.0
@@ -88,7 +206,7 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="DiagonalCamera" type="Camera3D" parent="viewport/DiagonalView/DiagonalViewport"]
-transform = Transform3D(0.707107, 0.548015, -0.446855, 0, 0.631948, 0.775011, 0.707107, -0.548015, 0.446855, -11.7516, 25.3452, 11.4668)
+transform = Transform3D(0.707107, 0.548015, -0.446855, 0, 0.631948, 0.775011, 0.707107, -0.548015, 0.446855, -11.7516, 32.3465, 11.4668)
 
 [node name="TopView" type="SubViewportContainer" parent="viewport"]
 offset_left = -16.0
@@ -110,6 +228,13 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("2_h7or4")
+
+[node name="UIAnm" type="AnimationPlayer" parent="viewport/UI"]
+libraries = {
+"": SubResource("AnimationLibrary_hucds")
+}
+autoplay = "Howtomove_default"
 
 [node name="TopViewLabel" type="Label" parent="viewport/UI"]
 layout_mode = 0
@@ -135,10 +260,39 @@ offset_left = 16.0
 offset_top = 8.0
 offset_right = 309.0
 offset_bottom = 55.0
-text = "Free camela"
+text = "Free cam"
 label_settings = SubResource("LabelSettings_23qpn")
 
 [node name="Frame" type="Polygon2D" parent="viewport/UI"]
 position = Vector2(0, 456)
 scale = Vector2(0.3, 0.3)
 polygon = PackedVector2Array(0, -26.6667, 0, 640, 1120, 640, 1120, -666.667, 1093.33, -666.667, 0, -666.667, 0, -640, 0, -26.6667, 26.6667, -26.6667, 26.6667, -640, 1093.33, -640.139, 1093.33, 613.333, 26.6667, 613.333, 26.6667, 53.3333, 1093.33, 53.3333, 1093.33, -26.6667)
+
+[node name="Howtomovetoggle" type="Button" parent="viewport/UI"]
+layout_mode = 0
+offset_left = 936.0
+offset_top = 16.0
+offset_right = 1136.0
+offset_bottom = 64.0
+theme = SubResource("Theme_gul52")
+theme_override_fonts/font = ExtResource("1_2k20d")
+theme_override_font_sizes/font_size = 20
+text = "How to move"
+
+[node name="Howtomove" type="Label" parent="viewport/UI"]
+layout_mode = 0
+offset_left = 1168.0
+offset_top = 80.0
+offset_right = 1546.0
+offset_bottom = 210.0
+text = "Press button again to hide
+
+WASD: Move
+Q: Go Down
+E: Go Up
+Right-Click + move pointer: viewpoint control
+R: Reset to initial camera position"
+label_settings = SubResource("LabelSettings_oreox")
+horizontal_alignment = 2
+
+[connection signal="pressed" from="viewport/UI/Howtomovetoggle" to="viewport/UI" method="_on_howtomovetoggle_pressed"]
